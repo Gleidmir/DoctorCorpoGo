@@ -1191,13 +1191,13 @@ function AdminDashboard() {
 
                   {/* Search Bar */}
                   <div className="relative w-full sm:w-64">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-400" />
                     <input
                       type="text"
                       value={clientSearch}
                       onChange={(e) => setClientSearch(e.target.value)}
                       placeholder="Pesquisar por nome ou celular"
-                      className="w-full rounded-xl bg-zinc-950/90 pl-9 pr-4 py-2.5 text-xs text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
+                      className="w-full rounded-xl bg-zinc-900/90 pl-9 pr-4 py-2.5 text-xs text-white placeholder:text-zinc-500 border border-zinc-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -1209,43 +1209,43 @@ function AdminDashboard() {
                   onSubmit={handleClientSubmit}
                   className="glass-card rounded-2xl p-5 space-y-4 animate-in fade-in slide-in-from-top-3 duration-200"
                 >
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-300">
                     {editingClient ? "Editar Cliente" : "Cadastrar Novo Cliente"}
                   </h3>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Nome do Cliente</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-300">Nome do Cliente</label>
                       <input
                         type="text"
                         required
                         value={clientName}
                         onChange={(e) => setClientName(e.target.value)}
                         placeholder="Ex: João da Silva"
-                        className="w-full rounded-xl bg-zinc-950 mt-1.5 px-4 py-3 text-xs text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
+                        className="w-full rounded-xl bg-zinc-900 mt-1.5 px-4 py-3 text-xs text-white placeholder:text-zinc-500 border border-zinc-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-all"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Celular (WhatsApp - com DDD)</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-300">Celular (WhatsApp - com DDD)</label>
                       <input
                         type="text"
                         required
                         value={clientPhone}
                         onChange={(e) => setClientPhone(e.target.value)}
                         placeholder="Ex: (62) 99329-9120"
-                        className="w-full rounded-xl bg-zinc-950 mt-1.5 px-4 py-3 text-xs text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
+                        className="w-full rounded-xl bg-zinc-900 mt-1.5 px-4 py-3 text-xs text-white placeholder:text-zinc-500 border border-zinc-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-all"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">E-mail (Opcional)</label>
+                      <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-300">E-mail (Opcional)</label>
                       <input
                         type="email"
                         value={clientEmail}
                         onChange={(e) => setClientEmail(e.target.value)}
                         placeholder="Ex: joao@gmail.com"
-                        className="w-full rounded-xl bg-zinc-950 mt-1.5 px-4 py-3 text-xs text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
+                        className="w-full rounded-xl bg-zinc-900 mt-1.5 px-4 py-3 text-xs text-white placeholder:text-zinc-500 border border-zinc-700 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-all"
                       />
                     </div>
                   </div>
