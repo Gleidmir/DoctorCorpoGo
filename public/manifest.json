@@ -9,10 +9,11 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/og_image.png?v=4",
+      "src": "/og_image.png?v=5",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ]
 }
+

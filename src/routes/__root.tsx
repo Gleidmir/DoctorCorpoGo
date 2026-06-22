@@ -89,8 +89,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@doctorcorpogo" },
       { name: "twitter:title", content: "DOCTORCORPO GO" },
       { name: "twitter:description", content: "DoctorCorpo GO — Seu horário, seu procedimento, você no controle. Sistema de agendamento online fácil e prático para clínicas de estética e odontologia." },
-      { property: "og:image", content: "https://doctorcorpogo.netlify.app/og_image.png?v=4" },
-      { name: "twitter:image", content: "https://doctorcorpogo.netlify.app/og_image.png?v=4" },
+      { property: "og:image", content: "https://doctorcorpogo.netlify.app/og_image.png?v=5" },
+      { name: "twitter:image", content: "https://doctorcorpogo.netlify.app/og_image.png?v=5" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
@@ -111,11 +111,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "icon",
         type: "image/png",
-        href: "/og_image.png?v=4",
+        href: "/og_image.png?v=5",
       },
       {
         rel: "apple-touch-icon",
-        href: "https://doctorcorpogo.netlify.app/og_image.png?v=4",
+        href: "https://doctorcorpogo.netlify.app/og_image.png?v=5",
       },
       {
         rel: "canonical",
@@ -129,7 +129,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "Dentist",
           "name": "DoctorCorpo GO",
-          "image": "https://doctorcorpogo.netlify.app/og_image.png?v=4",
+          "image": "https://doctorcorpogo.netlify.app/og_image.png?v=5",
           "url": "https://doctorcorpogo.netlify.app",
           "telephone": "+5562993299120",
           "priceRange": "$$$",
