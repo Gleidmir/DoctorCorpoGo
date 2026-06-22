@@ -224,34 +224,34 @@ function LoginPage() {
             /* CLIENT FORM */
             <form onSubmit={handleClientSubmit} className="space-y-4">
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Seu Nome</label>
+                <label className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-200">Seu Nome</label>
                 <div className="relative mt-1.5">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                   <input
                     type="text"
                     required
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     placeholder="Ex: João da Silva"
-                    className="w-full rounded-xl bg-zinc-950/90 pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
+                    className="w-full rounded-xl bg-zinc-800 pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-zinc-400 border border-zinc-600 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Celular (WhatsApp)</label>
+                <label className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-200">Celular (WhatsApp)</label>
                 <div className="relative mt-1.5">
-                  <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+                  <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                   <input
                     type="tel"
                     required
                     value={clientPhone}
                     onChange={(e) => setClientPhone(e.target.value.replace(/\D/g, ""))}
                     placeholder="Ex: 62999998888"
-                    className="w-full rounded-xl bg-zinc-950/90 pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
+                    className="w-full rounded-xl bg-zinc-800 pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-zinc-400 border border-zinc-600 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
                   />
                 </div>
-                <p className="text-[10px] text-zinc-500 mt-1">Apenas números com DDD</p>
+                <p className="text-[10px] text-zinc-400 mt-1 font-semibold">Apenas números com DDD</p>
               </div>
 
               <button
@@ -266,31 +266,31 @@ function LoginPage() {
             /* ADMIN FORM */
             <form onSubmit={handleAdminSubmit} className="space-y-4">
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">E-mail Administrativo</label>
+                <label className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-200">E-mail Administrativo</label>
                 <div className="relative mt-1.5">
-                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+                  <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                   <input
                     type="email"
                     required
                     value={adminEmail}
                     onChange={(e) => setAdminEmail(e.target.value)}
                     placeholder="admin@doctorcorpo.com"
-                    className="w-full rounded-xl bg-zinc-950/90 pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-[#fbbf24] focus:outline-none transition-all"
+                    className="w-full rounded-xl bg-zinc-800 pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-zinc-400 border border-zinc-600 focus:ring-2 focus:ring-[#fbbf24] focus:outline-none transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Senha</label>
+                <label className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-200">Senha</label>
                 <div className="relative mt-1.5">
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
                   <input
                     type="password"
                     required
                     value={adminPassword}
                     onChange={(e) => setAdminPassword(e.target.value)}
                     placeholder="••••••"
-                    className="w-full rounded-xl bg-zinc-950/90 pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-[#fbbf24] focus:outline-none transition-all"
+                    className="w-full rounded-xl bg-zinc-800 pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-zinc-400 border border-zinc-600 focus:ring-2 focus:ring-[#fbbf24] focus:outline-none transition-all"
                   />
                 </div>
               </div>

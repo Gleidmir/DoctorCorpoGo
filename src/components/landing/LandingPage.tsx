@@ -266,7 +266,7 @@ function SignupCard() {
           options: {
             data: {
               role: "admin",
-              name: "Barbeiro Administrador",
+              name: "Administrador da Clínica",
             }
           }
         });
@@ -290,7 +290,7 @@ function SignupCard() {
       // Local fallback: log in directly using the newly registered email as the tenant ID!
       setCurrentUser({
         role: "admin",
-        name: "Barbeiro Administrador",
+        name: "Administrador da Clínica",
         email: email,
       });
       toast.success("Cadastro de teste efetuado e conectado com sucesso!");

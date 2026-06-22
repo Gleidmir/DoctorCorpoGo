@@ -958,25 +958,25 @@ function BookingFlow({ clientPhone, clientName, shopProfile, onSessionUpdate, on
             <div className="pt-3 border-t border-zinc-800 text-xs space-y-3">
               <p className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Dados do Agendamento</p>
               <div>
-                <label className="text-[10px] text-zinc-400 font-medium">Nome do Cliente</label>
+                <label className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-200">Nome do Cliente</label>
                 <input
                   type="text"
                   required
                   value={customClientName}
                   onChange={(e) => setCustomClientName(e.target.value)}
                   placeholder="Ex: João da Silva"
-                  className="w-full rounded-xl bg-zinc-950 mt-1 px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
+                  className="w-full rounded-xl bg-zinc-800 mt-1 px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-400 border border-zinc-600 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
                 />
               </div>
               <div>
-                <label className="text-[10px] text-zinc-400 font-medium">WhatsApp (com DDD)</label>
+                <label className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-200">WhatsApp (com DDD)</label>
                 <input
                   type="tel"
                   required
                   value={customClientPhone}
                   onChange={(e) => setCustomClientPhone(e.target.value.replace(/\D/g, ""))}
                   placeholder="Ex: 62999998888"
-                  className="w-full rounded-xl bg-zinc-950 mt-1 px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-600 ring-1 ring-zinc-800 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
+                  className="w-full rounded-xl bg-zinc-800 mt-1 px-3.5 py-2.5 text-xs text-white placeholder:text-zinc-400 border border-zinc-600 focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"
                 />
               </div>
             </div>

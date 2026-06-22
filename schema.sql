@@ -16,14 +16,16 @@ CREATE TABLE IF NOT EXISTS public.barbers (
     start_time TEXT DEFAULT '08:00',
     end_time TEXT DEFAULT '19:00',
     blocked_dates TEXT DEFAULT '[]',
-    work_hours TEXT DEFAULT '["06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"]',
+    work_hours TEXT DEFAULT '["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00"]',
     tenant_id TEXT DEFAULT 'default' NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
 -- Habilitar Row Level Security (RLS) para Barbeiros (Leitura pública, escrita autenticada por tenant)
 ALTER TABLE public.barbers ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Leitura pública de barbeiros" ON public.barbers;
 CREATE POLICY "Leitura pública de barbeiros" ON public.barbers FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Escrita para admins autenticados" ON public.barbers;
 CREATE POLICY "Escrita para admins autenticados" ON public.barbers FOR ALL TO authenticated 
     USING (tenant_id = (auth.jwt() ->> 'email'::text))
     WITH CHECK (tenant_id = (auth.jwt() ->> 'email'::text));
@@ -43,7 +45,9 @@ CREATE TABLE IF NOT EXISTS public.services (
 
 -- Habilitar RLS para Serviços (Leitura pública, escrita autenticada por tenant)
 ALTER TABLE public.services ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Leitura pública de serviços" ON public.services;
 CREATE POLICY "Leitura pública de serviços" ON public.services FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Escrita de serviços para admins" ON public.services;
 CREATE POLICY "Escrita de serviços para admins" ON public.services FOR ALL TO authenticated 
     USING (tenant_id = (auth.jwt() ->> 'email'::text))
     WITH CHECK (tenant_id = (auth.jwt() ->> 'email'::text));
@@ -64,13 +68,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS clients_tenant_phone_idx ON public.clients (te
 
 -- Habilitar RLS para Clientes (Leitura/escrita controlada por tenant)
 ALTER TABLE public.clients ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Permitir leitura de clientes" ON public.clients FOR SELECT 
-    USING (
-        (auth.role() = 'authenticated' AND tenant_id = (auth.jwt() ->> 'email'::text))
-        OR
-        (auth.role() = 'anon')
-    );
+DROP POLICY IF EXISTS "Permitir leitura de clientes" ON public.clients;
+CREATE POLICY "Permitir leitura de clientes" ON public.clients FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Permitir inserção de clientes" ON public.clients;
 CREATE POLICY "Permitir inserção de clientes" ON public.clients FOR INSERT WITH CHECK (tenant_id IS NOT NULL);
+DROP POLICY IF EXISTS "Gerenciamento total de clientes por admins" ON public.clients;
 CREATE POLICY "Gerenciamento total de clientes por admins" ON public.clients FOR ALL TO authenticated 
     USING (tenant_id = (auth.jwt() ->> 'email'::text))
     WITH CHECK (tenant_id = (auth.jwt() ->> 'email'::text));
@@ -95,21 +97,22 @@ CREATE TABLE IF NOT EXISTS public.appointments (
 
 -- Habilitar RLS para Agendamentos (Controle refinado por tenant e cliente)
 ALTER TABLE public.appointments ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Permitir criar agendamentos" ON public.appointments;
 CREATE POLICY "Permitir criar agendamentos" ON public.appointments FOR INSERT WITH CHECK (tenant_id IS NOT NULL);
-CREATE POLICY "Permitir leitura de agendamentos" ON public.appointments FOR SELECT 
-    USING (
-        (auth.role() = 'authenticated' AND tenant_id = (auth.jwt() ->> 'email'::text))
-        OR
-        (auth.role() = 'anon')
-    );
+DROP POLICY IF EXISTS "Permitir leitura de agendamentos" ON public.appointments;
+CREATE POLICY "Permitir leitura de agendamentos" ON public.appointments FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Permitir atualização de agendamentos por admins" ON public.appointments;
 CREATE POLICY "Permitir atualização de agendamentos por admins" ON public.appointments FOR UPDATE TO authenticated 
     USING (tenant_id = (auth.jwt() ->> 'email'::text))
     WITH CHECK (tenant_id = (auth.jwt() ->> 'email'::text));
+DROP POLICY IF EXISTS "Permitir cancelamento pelo próprio cliente" ON public.appointments;
 CREATE POLICY "Permitir cancelamento pelo próprio cliente" ON public.appointments FOR UPDATE TO anon 
     USING (status = 'pending')
     WITH CHECK (status = 'cancelled');
+DROP POLICY IF EXISTS "Permitir exclusão de agendamentos por admins" ON public.appointments;
 CREATE POLICY "Permitir exclusão de agendamentos por admins" ON public.appointments FOR DELETE TO authenticated 
     USING (tenant_id = (auth.jwt() ->> 'email'::text));
+DROP POLICY IF EXISTS "Permitir exclusão pelo próprio cliente" ON public.appointments;
 CREATE POLICY "Permitir exclusão pelo próprio cliente" ON public.appointments FOR DELETE TO anon 
     USING (client_phone IS NOT NULL);
 
@@ -118,12 +121,12 @@ CREATE POLICY "Permitir exclusão pelo próprio cliente" ON public.appointments 
 -- CARGA INICIAL DE DADOS (OPCIONAL/RECOMENDADO)
 -- ====================================================
 
--- Inserir Barbeiros Iniciais (caso não existam)
+-- Inserir Profissionais Iniciais (caso não existam)
 INSERT INTO public.barbers (id, name, avatar, phone, work_days, start_time, end_time, blocked_dates, work_hours) VALUES
-('b1', 'PASTOR', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face', '5562993299120', '[1,2,3,4,5,6]', '08:00', '19:00', '[]', '["06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"]'),
-('b2', 'RAFAEL', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop&crop=face', '5562993299120', '[1,2,3,4,5,6]', '08:00', '19:00', '[]', '["06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"]'),
-('b3', 'ANDRÉ', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face', '5562993299120', '[1,2,3,4,5,6]', '08:00', '19:00', '[]', '["06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"]'),
-('b4', 'BRUNO', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face', '5562993299120', '[1,2,3,4,5,6]', '08:00', '19:00', '[]', '["06:00","06:30","07:00","07:30","08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"]')
+('b1', 'PASTOR', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face', '5562993299120', '[1,2,3,4,5,6]', '08:00', '19:00', '[]', '["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00"]'),
+('b2', 'RAFAEL', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop&crop=face', '5562993299120', '[1,2,3,4,5,6]', '08:00', '19:00', '[]', '["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00"]'),
+('b3', 'ANDRÉ', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face', '5562993299120', '[1,2,3,4,5,6]', '08:00', '19:00', '[]', '["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00"]'),
+('b4', 'BRUNO', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face', '5562993299120', '[1,2,3,4,5,6]', '08:00', '19:00', '[]', '["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00"]')
 ON CONFLICT (id) DO NOTHING;
 
 -- Inserir Serviços Iniciais (caso não existam)
@@ -145,17 +148,22 @@ INSERT INTO public.services (id, name, price, duration, is_active) VALUES
 ON CONFLICT (id) DO NOTHING;
 
 
--- 5. Tabela de Perfis de Barbearias (Tenant Profiles)
+-- 5. Tabela de Perfis de Clínicas (Tenant Profiles)
 CREATE TABLE IF NOT EXISTS public.barber_shops (
     tenant_id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     logo_url TEXT,
+    subscription_status TEXT DEFAULT 'expired',
+    subscription_plan TEXT DEFAULT 'mensal',
+    subscription_expires_at TIMESTAMP WITH TIME ZONE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Habilitar RLS para Perfis de Barbearias (Leitura pública, escrita autenticada pelo respectivo admin)
+-- Habilitar RLS para Perfis de Clínicas (Leitura pública, escrita autenticada pelo respectivo admin)
 ALTER TABLE public.barber_shops ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Leitura pública de perfis" ON public.barber_shops;
 CREATE POLICY "Leitura pública de perfis" ON public.barber_shops FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Escrita de perfis para admins" ON public.barber_shops;
 CREATE POLICY "Escrita de perfis para admins" ON public.barber_shops FOR ALL TO authenticated 
     USING (tenant_id = (auth.jwt() ->> 'email'::text) OR (auth.jwt() ->> 'email'::text) = 'gleidmircristino@hotmail.com')
     WITH CHECK (tenant_id = (auth.jwt() ->> 'email'::text) OR (auth.jwt() ->> 'email'::text) = 'gleidmircristino@hotmail.com');
@@ -231,7 +239,7 @@ BEGIN
   INSERT INTO public.barber_shops (tenant_id, name, subscription_status, subscription_plan)
   VALUES (
     NEW.email,
-    UPPER(SPLIT_PART(NEW.email, '@', 1)) || ' BARBEARIA',
+    UPPER(SPLIT_PART(NEW.email, '@', 1)) || ' CLÍNICA',
     'expired',
     'mensal'
   )
@@ -296,6 +304,3 @@ DROP TRIGGER IF EXISTS trg_check_barber_shop_subscription ON public.barber_shops
 CREATE TRIGGER trg_check_barber_shop_subscription
   BEFORE INSERT OR UPDATE ON public.barber_shops
   FOR EACH ROW EXECUTE FUNCTION public.check_barber_shop_subscription();
-
-
-
