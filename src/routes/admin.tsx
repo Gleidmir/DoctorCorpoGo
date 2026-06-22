@@ -686,7 +686,9 @@ function AdminDashboard() {
     );
   }
 
-  if (subCheck?.status === "expired") {
+  const isMasterAdmin = ["gleidmircristino@hotmail.com", "gleidmircristino@gmail.com"].includes(session?.email || "");
+
+  if (subCheck?.status === "expired" && !isMasterAdmin) {
     return (
       <div className="min-h-screen bg-zinc-950 text-white antialiased flex flex-col justify-between relative">
         {/* Top Header */}
@@ -862,7 +864,7 @@ function AdminDashboard() {
             { id: "servicos" as const, label: "Gerenciar Procedimentos", icon: Layers },
             { id: "barbeiros" as const, label: "Gerenciar Especialistas", icon: Users },
             { id: "perfil" as const, label: "Minha Clínica", icon: Store },
-            ...(session?.email === "gleidmircristino@hotmail.com"
+            ...((session?.email === "gleidmircristino@hotmail.com" || session?.email === "gleidmircristino@gmail.com")
               ? [{ id: "master" as const, label: "Adm Master", icon: UserCheck }]
               : []),
           ].map((tab) => (
@@ -1909,7 +1911,7 @@ function AdminDashboard() {
           )}
 
           {/* TAB: MASTER ADMIN */}
-          {activeTab === "master" && session?.email === "gleidmircristino@hotmail.com" && (
+          {activeTab === "master" && (session?.email === "gleidmircristino@hotmail.com" || session?.email === "gleidmircristino@gmail.com") && (
             <MasterAdminPanel />
           )}
 
