@@ -275,6 +275,19 @@ function LoginPage() {
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "AGENDAR MINHA CONSULTA →"}
               </button>
+
+              <div className="text-center mt-6">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAdminOverride(true);
+                    setActiveTab("admin");
+                  }}
+                  className="text-xs text-amber-500 hover:text-amber-400 font-bold transition-colors cursor-pointer"
+                >
+                  Acesso Clínicas / Administrador →
+                </button>
+              </div>
             </form>
           ) : (
             /* ADMIN FORM */
@@ -316,6 +329,19 @@ function LoginPage() {
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin text-zinc-950" /> : "ENTRAR NO PAINEL →"}
               </button>
+
+              <div className="text-center mt-6">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAdminOverride(false);
+                    setActiveTab("client");
+                  }}
+                  className="text-xs text-zinc-500 hover:text-zinc-400 font-bold transition-colors cursor-pointer"
+                >
+                  ← Voltar para Agendamento do Cliente
+                </button>
+              </div>
             </form>
           )}
         </div>

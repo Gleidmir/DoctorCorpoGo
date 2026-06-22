@@ -470,10 +470,10 @@ export function LandingPage() {
             {/* Pricing Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { name: "Mensal", price: "R$ 29,90", rawPrice: 29.90, desc: "Acesso total por 30 dias", detail: "R$ 29,90 / mês" },
-                { name: "Trimestral", price: "R$ 74,90", rawPrice: 74.90, desc: "Acesso total por 90 dias", detail: "R$ 24,96 / mês", popular: true },
-                { name: "Semestral", price: "R$ 139,90", rawPrice: 139.90, desc: "Acesso total por 180 dias", detail: "R$ 23,31 / mês" },
-                { name: "Anual", price: "R$ 239,90", rawPrice: 239.90, desc: "Acesso total por 365 dias", detail: "R$ 19,99 / mês", bestDeal: true },
+                { name: "Mensal", price: "R$ 99,90", rawPrice: 99.90, desc: "Acesso total por 30 dias", detail: "R$ 99,90 / mês" },
+                { name: "Trimestral", price: "R$ 249,90", rawPrice: 249.90, desc: "Acesso total por 90 dias", detail: "R$ 83,30 / mês", popular: true },
+                { name: "Semestral", price: "R$ 449,90", rawPrice: 449.90, desc: "Acesso total por 180 dias", detail: "R$ 74,98 / mês" },
+                { name: "Anual", price: "R$ 799,90", rawPrice: 799.90, desc: "Acesso total por 365 dias", detail: "R$ 66,65 / mês", bestDeal: true },
               ].map((p) => (
                 <div
                   key={p.name}
