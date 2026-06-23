@@ -587,7 +587,8 @@ function AdminDashboard() {
     }
     
     const dateStr = new Date(apt.date + "T12:00:00").toLocaleDateString("pt-BR");
-    const message = `Olá, ${apt.clientName}! Passando para lembrar do seu agendamento no DoctorCorpo GO:\n\n` +
+    const nameToUse = shopName || "nossa clínica";
+    const message = `Olá, ${apt.clientName}! Passando para lembrar do seu agendamento na clínica ${nameToUse}:\n\n` +
       `💇 *Procedimento:* ${apt.serviceName}\n` +
       `📅 *Data:* ${dateStr}\n` +
       `⏰ *Horário:* ${apt.time}\n` +

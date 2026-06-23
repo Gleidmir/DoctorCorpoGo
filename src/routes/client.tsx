@@ -324,7 +324,7 @@ function ClientDashboard() {
             onLogout={handleLogout}
           />
         ) : (
-          <MyAppointments clientPhone={session.phone} />
+          <MyAppointments clientPhone={session.phone} shopProfile={shopProfile} />
         )}
       </main>
 
@@ -543,7 +543,8 @@ function BookingFlow({ clientPhone, clientName, shopProfile, onSessionUpdate, on
     }
 
     const dateStr = new Date(selectedDate + "T12:00:00").toLocaleDateString("pt-BR");
-    const message = `Olá, ${selectedBarber.name}! Acabei de realizar um agendamento pelo aplicativo DoctorCorpo GO:\n\n` +
+    const shopName = shopProfile?.name || "nossa clínica";
+    const message = `Olá, ${selectedBarber.name}! Acabei de realizar um agendamento na clínica ${shopName}:\n\n` +
       `👤 *Cliente:* ${customClientName}\n` +
       `📞 *Telefone:* ${customClientPhone}\n` +
       `💇 *Procedimento:* ${selectedService.name}\n` +
@@ -1098,9 +1099,10 @@ function BookingFlow({ clientPhone, clientName, shopProfile, onSessionUpdate, on
 /* ========================================================================= */
 interface MyAppointmentsProps {
   clientPhone: string;
+  shopProfile?: BarberShopProfile | null;
 }
 
-function MyAppointments({ clientPhone }: MyAppointmentsProps) {
+function MyAppointments({ clientPhone, shopProfile }: MyAppointmentsProps) {
   const [apts, setApts] = useState<Appointment[]>([]);
   const [barbers, setBarbers] = useState<Barber[]>([]);
   const [loading, setLoading] = useState(true);
@@ -1211,7 +1213,8 @@ function MyAppointments({ clientPhone }: MyAppointmentsProps) {
     }
 
     const dateStr = new Date(apt.date + "T12:00:00").toLocaleDateString("pt-BR");
-    const message = `Olá, ${apt.barberName}! Sou o cliente ${apt.clientName} e estou enviando esta mensagem para confirmar meu agendamento no aplicativo DoctorCorpo GO:\n\n` +
+    const shopName = shopProfile?.name || "nossa clínica";
+    const message = `Olá, ${apt.barberName}! Sou o cliente ${apt.clientName} e estou enviando esta mensagem para confirmar meu agendamento na clínica ${shopName}:\n\n` +
       `💇 *Procedimento:* ${apt.serviceName}\n` +
       `📅 *Data:* ${dateStr}\n` +
       `⏰ *Horário:* ${apt.time}\n\n` +
